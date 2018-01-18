@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Viz Refresher</title>
+    <script src="./tableau-extensions-0.8.0.js"></script>
+  </head>
+  <body>
+    <button><img width="128px" height="128px" src="./refresh.png" /></button>
+  </body>
+  <script>
+    let datasources = [];
+    tableau.extensions.initializeAsync().then( () => {
+      const dashboard = tableau.extensions.dashboardContent.dashboard;
+      let promises = []
+      for (let ws of dashboard.worksheets) {
+        promises.push(ws.getDataSourcesAsync())
+      }
+      Promise.all(promises)
+        .then(dsArray => { datasources = dsArray })
+        .then(() => {
+          setTimeout(refreshDatasources, 2000);
+        });
+    });
+
+    function refreshDatasources() {
+      for (let ds of datasources) {
+        ds.refreshAsync();
+      }
+    }
+  </script>
+</html>
