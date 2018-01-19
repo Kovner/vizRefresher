@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>UI - Popup</title>
+    <!-- This file should be getting injected by desktop but it isn't yet -->
+    <script src="http://localhost:7755/desktop-bootstrap.js"></script>
+
+    <!-- Extensions Library (this will be hosted on a CDN eventually) -->
+    <script src="./tableau-extensions-0.9.0.js"></script>
+  </head>
+  <body>
+    <form onsubmit="submitInterval()">
+      <label for="intervalEntry">Seconds between refreshes:</label>
+      <input id="intervalEntry" type="text" value='5'/>
+    </form>
+  </body>
+  <script>
+    tableau.extensions.initializeDialogAsync().then(function() {
+      // $('#close').click(() => {
+      //   tableau.extensions.ui.closeDialog("testPayload");
+      // });
+    });
+    function submitInterval() {
+      let interval = document.getElementById('intervalEntry').value;
+      console.log(interval);
+      tableau.extensions.ui.closeDialog(interval);
+    }
+  </script>
+</html>
